@@ -27,7 +27,7 @@ function hello_gutenberg_scripts() {
     wp_enqueue_script(
         'hello-gutenberg-block-js',
         plugins_url( $blockPath, __FILE__ ),
-        [ 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
+        [ 'wp-i18n', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
         filemtime( plugin_dir_path(__FILE__) . $blockPath )
     );
     // Enqueue frontend and editor block styles
@@ -108,7 +108,7 @@ function wp_api_add_posts_endpoints() {
 function addPosts_callback( $data ) {
 	if ( ! empty( $data['id'] ) ) {
 		$review = new WPPR_Review_Model( $data['id'] );
-		if ( $data['status'] === 'yes' ) {
+		if ( $data['cwp_meta_box_check'] === 'Yes' ) {
 			$review->activate();
 			if ( ! empty( $data['cwp_rev_product_name'] ) ) {
 				$review->set_name( $data['cwp_rev_product_name'] );
