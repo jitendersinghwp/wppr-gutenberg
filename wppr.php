@@ -27,15 +27,12 @@ function hello_gutenberg_scripts() {
     wp_enqueue_script(
         'hello-gutenberg-block-js',
         plugins_url( $blockPath, __FILE__ ),
-        [ 'wp-i18n', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ],
-        filemtime( plugin_dir_path(__FILE__) . $blockPath )
+        [ 'wp-i18n', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post', 'wp-api' ]
     );
     // Enqueue frontend and editor block styles
     wp_enqueue_style(
         'hello-gutenberg-block-css',
-        plugins_url ($stylePath, __FILE__),
-        '',
-        filemtime( plugin_dir_path(__FILE__) . $stylePath )
+        plugins_url ($stylePath, __FILE__)
     );
 }
 // Hook scripts function into block editor hook
