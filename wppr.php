@@ -141,5 +141,4 @@ function addPosts_callback( $data ) {
 }
 
 // Make it work with Pro version.
-// Add Enable/Disable Review Option.
 // Enable REST in wppr_review CPT.

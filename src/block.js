@@ -12,7 +12,6 @@ const { __ } = wp.i18n;
 
 const { registerPlugin } = wp.plugins;
 
-const { PluginPostStatusInfo } = wp.editPost;
 
 const { MediaUpload } = wp.editor;
 
@@ -23,7 +22,8 @@ const {
 
 const {
 	PluginSidebar,
-	PluginSidebarMoreMenuItem
+	PluginSidebarMoreMenuItem,
+	PluginPostStatusInfo,
 } = wp.editPost;
 
 const {
@@ -112,10 +112,12 @@ class WP_Product_Review extends Component {
 
 	toggleReviewStatus() {
 		this.setState( { cwp_meta_box_check: this.state.cwp_meta_box_check === 'Yes' ? 'No' : 'Yes' } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeReviewTitle( value ) {
 		this.setState( { cwp_rev_product_name: value } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeReviewImage( value ) {
@@ -124,10 +126,12 @@ class WP_Product_Review extends Component {
 		} else if ( value.id !== undefined ){
 			this.setState( { cwp_rev_product_image: value.id } );
 		}
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeImageLink( value ) {
 		this.setState( { cwp_image_link: value } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeReviewAffiliateTitle( e, key ) {
@@ -144,12 +148,14 @@ class WP_Product_Review extends Component {
 			renameKey( wppr_links, key, e );
 		}
 		this.setState( { wppr_links } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeReviewAffiliateLink( e, key ) {
 		const wppr_links = { ...this.state.wppr_links };
 		wppr_links[key] = e;
 		this.setState( { wppr_links } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	addButton() {
@@ -160,18 +166,21 @@ class WP_Product_Review extends Component {
 
 	onChangeReviewPrice( value ) {
 		this.setState( { cwp_rev_price: value } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeOptionText( e, key ) {
 		const wppr_options = { ...this.state.wppr_options };
 		wppr_options[key]['name'] = e;
 		this.setState( { wppr_options } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	onChangeOptionNumber( e, key ) {
 		const wppr_options = { ...this.state.wppr_options };
 		wppr_options[key]['value'] = e;
 		this.setState( { wppr_options } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	addOption() {
@@ -188,6 +197,7 @@ class WP_Product_Review extends Component {
 		const wppr_pros = { ...this.state.wppr_pros };
 		wppr_pros[key] = e;
 		this.setState( { wppr_pros } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	addPro() {
@@ -201,6 +211,7 @@ class WP_Product_Review extends Component {
 		const wppr_cons = { ...this.state.wppr_cons };
 		wppr_cons[key] = e;
 		this.setState( { wppr_cons } );
+		this.props.editPostStatus( { edited: true } );
 	}
 
 	addCon() {
@@ -442,6 +453,7 @@ const WPPR = compose( [
 
 	withDispatch( ( dispatch ) => ( {
 		openReviewSidebar: () => dispatch( 'core/edit-post' ).openGeneralSidebar( 'wp-product-review/wp-product-review' ),
+		editPostStatus: dispatch( 'core/editor' ).editPost,
 	} ) ),
 
 	withAPIData( ( props ) => {
